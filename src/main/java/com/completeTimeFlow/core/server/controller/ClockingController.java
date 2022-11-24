@@ -4,6 +4,8 @@ import com.completeTimeFlow.core.repository.PersonRepository;
 import com.completeTimeFlow.core.server.domain.Clocking;
 import com.completeTimeFlow.core.server.domain.Person;
 import com.completeTimeFlow.core.repository.ClockingRepository;
+import com.completeTimeFlow.core.server.service.ClockingService;
+import com.completeTimeFlow.core.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,22 +23,24 @@ public class ClockingController {
     @Autowired
     PersonRepository personRepository;
 
+    @Autowired
+    ClockingService clockingService;
+
     @RequestMapping("/testCreateTablesAndSave")
     @GetMapping
     public ResponseEntity<String> creating() {
         Person person = new Person();
 
-        person.setName("João Pedro");
-        person.setRegisterDate(new Date());
+        person.setName("Salomão");
+        person.setRegisterDate(TimeUtil.getConvertedDate(new Date()));
         personRepository.save(person);
 
         Clocking clocking = new Clocking();
-        clocking.setGrade(1.3);
-        clocking.setClockingDate(new Date());
+        clocking.setGrade(9.9);
+        clocking.setClockingStartDate(new Date());
         clocking.setPerson(person);
-        clocking.setSubject("Programação");
-
-        clockingRepository.save(clocking);
-        return new ResponseEntity<String>("Saved!!!", HttpStatus.OK);
+        clocking.setSubject("Programação deep");
+        clockingService.saveDateFormatted(clocking);
+        return new ResponseEntity<String>("Saved again!!!", HttpStatus.OK);
     }
 }

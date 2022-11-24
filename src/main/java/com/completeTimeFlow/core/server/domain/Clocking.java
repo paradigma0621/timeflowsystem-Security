@@ -1,6 +1,5 @@
 package com.completeTimeFlow.core.server.domain;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -13,24 +12,35 @@ public class Clocking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @JoinColumn(name = "person_id", referencedColumnName = "id", nullable = false)
     @ManyToOne
-    Person person;
+    private Person person;
 
-    @Column(name = "clocking_date", nullable = false)
+    @Column(name = "clocking_start_date", nullable = true)
     @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
-    private Date clockingDate;
+    private Date clockingStartDate;
+
+    @Column(name = "clocking_finish_date", nullable = true)
+    @JsonFormat(pattern="dd-MM-yyyy HH:mm:ss")
+    private Date clockingFinishDate;
+
+    @Column(name = "minutes_duration", nullable = true)
+    private Integer minutesDuration;
+
 
     @Column(name = "grade", nullable = true)
-    Double grade;
+    private Double grade;
 
-    @Column(name = "subject", nullable = true, length = 255)
-    String subject;
+    @Column(name = "subject", nullable = true, length = 500)
+    private String subject;
 
-    @Column(name = "clocking_description", nullable = true, length = 255)
-    String clockingDescription;
+    @Column(name = "clocking_description", nullable = true, length = 500)
+    private String clockingDescription;
+
+    @Column(name = "localization", length = 255)
+    private String localization;
 
     @Column(name = "removed", nullable = true)
     private Boolean removed;
@@ -39,13 +49,16 @@ public class Clocking {
 
     }
 
-    public Clocking(Long id, Person person, Date clockingDate, Double grade, String subject, String clockingDescription) {
+    public Clocking(Long id, Person person, Date clockingStartDate, Date clockingFinishDate, Integer minutesDuration, Double grade, String subject, String clockingDescription, String localization) {
         this.id = id;
         this.person = person;
-        this.clockingDate = clockingDate;
+        this.clockingStartDate = clockingStartDate;
+        this.clockingFinishDate = clockingFinishDate;
+        this.minutesDuration = minutesDuration;
         this.grade = grade;
         this.subject = subject;
         this.clockingDescription = clockingDescription;
+        this.localization = localization;
     }
 
     public Long getId() {
@@ -62,14 +75,6 @@ public class Clocking {
 
     public void setPerson(Person person) {
         this.person = person;
-    }
-
-    public Date getClockingDate() {
-        return clockingDate;
-    }
-
-    public void setClockingDate(Date clockingDate) {
-        this.clockingDate = clockingDate;
     }
 
     public Double getGrade() {
@@ -104,14 +109,50 @@ public class Clocking {
         this.subject = subject;
     }
 
+    public Date getClockingStartDate() {
+        return clockingStartDate;
+    }
+
+    public void setClockingStartDate(Date clockingStartDate) {
+        this.clockingStartDate = clockingStartDate;
+    }
+
+    public Date getClockingFinishDate() {
+        return clockingFinishDate;
+    }
+
+    public void setClockingFinishDate(Date clockingFinishDate) {
+        this.clockingFinishDate = clockingFinishDate;
+    }
+
+    public Integer getMinutesDuration() {
+        return minutesDuration;
+    }
+
+    public void setMinutesDuration(Integer minutesDuration) {
+        this.minutesDuration = minutesDuration;
+    }
+
+    public String getLocalization() {
+        return localization;
+    }
+
+    public void setLocalization(String localization) {
+        this.localization = localization;
+    }
+
     @Override
     public String toString() {
         return "Clocking{" +
                 "id=" + id +
                 ", person=" + person +
-                ", clockingDate=" + clockingDate +
+                ", clockingStartDate=" + clockingStartDate +
+                ", clockingFinishDate=" + clockingFinishDate +
+                ", minutesDuration=" + minutesDuration +
                 ", grade=" + grade +
+                ", subject='" + subject + '\'' +
                 ", clockingDescription='" + clockingDescription + '\'' +
+                ", localization='" + localization + '\'' +
                 ", removed=" + removed +
                 '}';
     }
