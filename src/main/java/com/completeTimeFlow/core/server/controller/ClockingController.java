@@ -43,4 +43,10 @@ public class ClockingController {
         clockingService.saveDateFormatted(clocking);
         return new ResponseEntity<String>("Saved again!!!", HttpStatus.OK);
     }
+
+    @RequestMapping("/sayHello")
+    @GetMapping
+    public ResponseEntity<String> sayHello() {
+        return new ResponseEntity<String>("Hello!!!", HttpStatus.OK);
+    }
 }
