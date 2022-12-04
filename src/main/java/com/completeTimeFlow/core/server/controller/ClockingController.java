@@ -1,9 +1,9 @@
 package com.completeTimeFlow.core.server.controller;
 
+import com.completeTimeFlow.core.repository.ClockingRepository;
 import com.completeTimeFlow.core.repository.PersonRepository;
 import com.completeTimeFlow.core.server.domain.Clocking;
 import com.completeTimeFlow.core.server.domain.Person;
-import com.completeTimeFlow.core.repository.ClockingRepository;
 import com.completeTimeFlow.core.server.service.ClockingService;
 import com.completeTimeFlow.core.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+///@CrossOrigin(origins = "*")
 @RestController
 public class ClockingController {
     @Autowired
@@ -49,4 +50,15 @@ public class ClockingController {
     public ResponseEntity<String> sayHello() {
         return new ResponseEntity<String>("Hello!!!", HttpStatus.OK);
     }
+
+    ///@CrossOrigin(origins = "*")
+    @RequestMapping("/getPerson")
+    @GetMapping
+    public ResponseEntity<Person> getPerson() {
+        Person person = new Person();
+        person.setId(126L);
+        person.setName("Joaquim da Bahia");
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
 }
