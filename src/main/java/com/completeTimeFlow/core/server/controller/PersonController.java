@@ -9,19 +9,13 @@ import com.completeTimeFlow.core.util.TimeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.Optional;
 
-///@CrossOrigin(origins = "*")
 @RestController
-public class ClockingController {
-    @Autowired
-    ClockingRepository clockingRepository;
+@RequestMapping("/persons")
+public class PersonController {
 
     @Autowired
     PersonRepository personRepository;
@@ -52,6 +46,20 @@ public class ClockingController {
     public ResponseEntity<String> sayHello() {
         return new ResponseEntity<String>("Hello!!!", HttpStatus.OK);
     }
-    
+
+    @RequestMapping("/getPerson")
+    @GetMapping
+    public ResponseEntity<Person> getPerson() {
+        Person person = new Person();
+        person.setId(126L);
+        person.setName("Joaquim da Bahia");
+        return new ResponseEntity<>(person, HttpStatus.OK);
+    }
+
+    @RequestMapping("/create")
+    @PostMapping
+    public ResponseEntity<Person> createPerson(@RequestBody Person person) {
+        personRepository.save(person);
+        return new ResponseEntity<>(person, HttpStatus.OK);
     }
 }
